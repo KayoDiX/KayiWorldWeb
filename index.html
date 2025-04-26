@@ -5,40 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KayiWorld</title>
   <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --header-bg: #1e1e1e;
+      --accent-color: #a4ffa4;
+      --nav-bg: #2c2c2c;
+      --box-bg: #1e1e1e;
+      --border-color: #333;
+      --link-hover: #444;
+      --iframe-border: #444;
+      --footer-color: #888;
+    }
+
+    .light-mode {
+      --bg-color: #ffffff;
+      --text-color: #222222;
+      --header-bg: #f5f5f5;
+      --accent-color: #2a8f2a;
+      --nav-bg: #dddddd;
+      --box-bg: #f0f0f0;
+      --border-color: #ccc;
+      --link-hover: #dddddd;
+      --iframe-border: #ccc;
+      --footer-color: #444;
+    }
+
     body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #121212;
-      color: #fff;
+      padding: 0;
+      transition: background-color 0.5s, color 0.5s;
     }
 
     header {
-      background: #1e1e1e;
-      padding: 40px 20px;
+      background-color: var(--header-bg);
+      color: var(--accent-color);
       text-align: center;
+      padding: 30px;
     }
 
     header h1 {
       font-size: 3em;
       margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
     }
 
     header p {
       font-size: 1.2em;
-      color: #ccc;
+      margin-top: 10px;
     }
 
     nav {
-      background: #000;
-      padding: 10px 0;
+      background-color: var(--nav-bg);
       text-align: center;
+      padding: 15px;
+      font-weight: bold;
     }
 
     nav a {
-      color: #00aaff;
       margin: 0 15px;
-      text-decoration: none;
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+
+    .toggle-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: var(--box-bg);
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1000;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-button svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--accent-color);
+      transition: transform 0.3s ease;
     }
 
     .section {
@@ -48,55 +101,91 @@
 
     .section h2 {
       font-size: 2em;
-      margin-bottom: 50px;
+      margin-bottom: 20px;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: var(--accent-color);
     }
 
-    .card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 50px;
-    }
-
-    .card {
-      background-color: #1f1f1f;
+    .box {
+      background-color: var(--box-bg);
+      border: 4px solid var(--border-color);
       padding: 20px;
-      border-radius: 7.5px;
-      width: 500px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      transition: transform 0.3s ease;
+      margin: 20px auto;
+      max-width: 600px;
+      text-align: left;
+      position: relative;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
+    .box h3 {
+      margin-top: 0;
+      color: #66ff66;
     }
 
-    .card h3 {
-      color: #00aaff;
+    .box p {
+      font-size: 1em;
     }
 
-    .card p {
-      color: #ccc;
+    .box a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: var(--border-color);
+      border: 2px solid #66ff66;
+      color: var(--accent-color);
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease, transform 0.3s ease;
+      animation: bounce 2s infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    .box:hover a {
+      background-color: var(--link-hover);
+      border-color: var(--accent-color);
+      transform: scale(1.05);
+    }
+
+    .preview {
+      margin-top: 15px;
+      border: 2px solid var(--iframe-border);
+      width: 100%;
+      height: 300px;
+      display: none;
+    }
+
+    .box:hover .preview {
+      display: block;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-5px);
+      }
+      60% {
+        transform: translateY(-3px);
+      }
     }
 
     footer {
+      background-color: var(--header-bg);
       text-align: center;
       padding: 20px;
-      background: #000;
-      color: #777;
-    }
-
-    a {
-      color: #00aaff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+      font-size: 0.9em;
+      color: var(--footer-color);
     }
   </style>
 </head>
 <body>
+
+  <button class="toggle-button" onclick="toggleMode()">
+    <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M21.64 13.65A9 9 0 0 1 10.35 2.36 9 9 0 1 0 21.64 13.65z" />
+    </svg>
+  </button>
 
   <header>
     <h1>KayiWorld</h1>
@@ -105,53 +194,77 @@
 
   <nav>
     <a href="#youtube">YouTube</a>
-    <a href="#DiXTeGames">DiXTe Games</a>
-    <a href="#KDiXMusic">KayiMusic</a>
-    <a href="#Contacto">Contacta a Kayo</a>
+    <a href="#games">Juegos</a>
+    <a href="#music">Música</a>
+    <a href="#contacto">Contacto</a>
   </nav>
 
   <section class="section" id="youtube">
     <h2>YouTube</h2>
-    <div class="card-container">
-      <div class="card">
-        <h3>Canal del KayiWorld</h3>
-        <p>Videos para que veas mientras comes xdxd.</p>
-        <a href="https://youtube.com/@kayodix" target="_blank">Visitar canal</a>
-      </div>
+    <div class="box">
+      <h3>KayiWorld Channel</h3>
+      <p>Videos para que veas mientras comes xdxd</p>
+      <a href="https://youtube.com/@kayodix" target="_blank">Ve mis videos!</a>
+      <iframe class="preview" src="https://youtube.com/@TuCanal" loading="lazy"></iframe>
     </div>
   </section>
 
   <section class="section" id="games">
     <h2>DiXTe Games</h2>
-    <div class="card-container">
-      <div class="card">
-        <h3>Juegos Sencillos</h3>
-        <p>Juegos tontos que se me ocurrieron xd.</p>
-        <a href="#"> Juega alguno!</a>
-      </div>
+    <div class="box">
+      <h3>Mi pequeño estudio (solo soy yo XD)</h3>
+      <p>Juegos únicos creados con pasión por Kayi.</p>
+      <a href="#">Ver proyectos</a>
+      <iframe class="preview" src="about:blank"></iframe>
     </div>
   </section>
 
-  <section class="section" id="KayiMusic">
+  <section class="section" id="music">
     <h2>KDiX (KayiMusic)</h2>
-    <div class="card-container">
-      <div class="card">
-        <h3>KayiMusic 4 Life!</h3>
-        <p>Música que suena alrededor del KayiWorld</p>
-        <a href="https://open.spotify.com/intl-es/artist/1MJllffdgbn4nG50t3c1xS?si=KZ_22Je-T4-EhqnlMq3XhA">Escucha Ahora!</a>
-      </div>
+    <div class="box">
+      <h3>KayiMusic 4 Life!</h3>
+      <p>Música que suena alrededor del KayiWorld</p>
+      <a href="#">Escuchar ahora</a>
+      <iframe class="preview" src="about:blank"></iframe>
     </div>
   </section>
 
   <section class="section" id="contacto">
-    <h2>KayiContacto</h2>
-    <p>¿Quieres ser un habitante o dejar un mensaje? Escríbeme!</p>
-    <p><a href="mailto:kayodixte9@gmail.com">kayodixte9@gmail.com</a></p>
+    <h2>Contacto</h2>
+    <div class="box">
+      <p>¿Quieres ser un habitante o dejar un mensaje? Escríbeme!</p>
+      <p><a href="mailto:kayodixte9@gmail.com">kayodixte9@gmail.com</a></p>
+    </div>
   </section>
 
   <footer>
     &copy; 2025 KayiWorld. Todos los derechos reservados.
   </footer>
+
+  <script>
+    function toggleMode() {
+      const body = document.body;
+      const icon = document.getElementById('theme-icon');
+      const isLight = body.classList.toggle('light-mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+      // Cambia el icono
+      if (isLight) {
+        icon.innerHTML = '<circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />';
+      } else {
+        icon.innerHTML = '<path d="M21.64 13.65A9 9 0 0 1 10.35 2.36 9 9 0 1 0 21.64 13.65z" />';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      const icon = document.getElementById('theme-icon');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+        icon.innerHTML = '<circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />';
+      }
+    });
+  </script>
 
 </body>
 </html>
